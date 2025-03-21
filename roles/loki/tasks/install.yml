@@ -1,0 +1,15 @@
+---
+- name: Install Loki
+  become: true
+  apt:
+    name: loki
+    state: present
+    update_cache: yes
+
+- name: Enable and start the Loki Service
+  become: true
+  systemd_service:
+    name: loki
+    daemon_reload: true
+    enabled: true
+    state: started

@@ -1,0 +1,20 @@
+- name: Create a user for node_exporter
+  become: yes
+  user:
+    name: node_exporter
+    system: true
+    shell: /bin/false
+  
+- name: Create the service file
+  become: yes
+  copy:
+    src: node_exporter.service
+    dest: /etc/systemd/system/node_exporter.service
+    
+- name: Enable and start the Node Exporter Service
+  become: yes
+  systemd_service:
+    name: node_exporter
+    daemon_reload: true
+    enabled: true
+    state: started

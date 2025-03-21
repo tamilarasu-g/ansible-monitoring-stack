@@ -1,0 +1,44 @@
+---
+- name: Download the prometheus package
+  get_url:
+    url: https://github.com/prometheus/prometheus/releases/download/v3.2.1/prometheus-3.2.1.linux-amd64.tar.gz
+    dest: /tmp/prometheus-3.2.1.linux-amd64.tar.gz
+
+- name: Unzip the package
+  unarchive:
+    src: /tmp/prometheus-3.2.1.linux-amd64.tar.gz
+    dest: /tmp/
+    remote_src: yes
+
+- name: Create required directories
+  become: yes
+  file:
+    path: "{{item}}"
+    state: directory
+  loop:
+    - /etc/prometheus
+    - /var/lib/prometheus
+
+- name: Copy the binary and config to required location
+  become: yes
+  copy:
+    src: "/tmp/prometheus-3.2.1.linux-amd64/{{item}}"
+    dest: "/usr/local/bin/{{item}}"
+    mode: "0751"
+    remote_src: true
+  loop:
+    - prometheus
+    - promtool
+
+- name: Copy the config file to /etc/prometheus
+  become: yes
+  copy:
+    src: /tmp/prometheus-3.2.1.linux-amd64/prometheus.yml
+    dest: /etc/prometheus/prometheus.yml
+    remote_src: yes
+
+- name: Check if prometheus is installed correctly
+  command: prometheus --version
+  register: result
+  changed_when: false
+  failed_when: result.rc !=0

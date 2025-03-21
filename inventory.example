@@ -1,0 +1,16 @@
+[node_exporter]
+
+
+[prometheus]
+
+
+[grafana]
+
+
+[blackbox_exporter]
+
+
+[promtail]
+
+
+[loki]

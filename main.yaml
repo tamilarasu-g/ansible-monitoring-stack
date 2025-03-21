@@ -1,0 +1,33 @@
+---
+- name: Install and Configure Monitoring Stack
+  hosts: all
+  tasks:
+    - name: Prometheus Role
+      include_role:
+        name: prometheus
+      when: inventory_hostname in groups["prometheus"]
+
+    - name: Node Exporter Role
+      include_role:
+        name: node_exporter
+      when: inventory_hostname in groups["node_exporter"]
+
+    - name: Grafana role
+      include_role:
+        name: grafana
+      when: inventory_hostname in groups["grafana"]
+
+    - name: Loki role
+      include_role:
+        name: loki
+      when: inventory_hostname in groups["loki"]
+
+    # - name: Promtail role
+    #   include_role:
+    #     name: promtail
+    #   when: inventory_hostname in groups["promtail"]
+
+    # - name: Black Box Exporter role
+    #   include_role:
+    #     name: black_box_exporter
+    #   when: inventory_hostname in groups["black_box_exporter"]
