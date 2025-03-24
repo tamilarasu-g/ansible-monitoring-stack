@@ -22,12 +22,12 @@
         name: loki
       when: inventory_hostname in groups["loki"]
 
+    - name: Black Box Exporter role
+      include_role:
+        name: blackbox_exporter
+      when: inventory_hostname in groups["blackbox_exporter"]
+
     # - name: Promtail role
     #   include_role:
     #     name: promtail
     #   when: inventory_hostname in groups["promtail"]
-
-    # - name: Black Box Exporter role
-    #   include_role:
-    #     name: black_box_exporter
-    #   when: inventory_hostname in groups["black_box_exporter"]
