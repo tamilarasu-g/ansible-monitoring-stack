@@ -27,6 +27,11 @@
         name: blackbox_exporter
       when: inventory_hostname in groups["blackbox_exporter"]
 
+    - name: Apache SSL role
+      include_role:
+        name: apache_ssl
+      when: inventory_hostname in groups["apache_ssl"] 
+
     # - name: Promtail role
     #   include_role:
     #     name: promtail

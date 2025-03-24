@@ -1,0 +1,18 @@
+---
+- name: Install Apache and Php packages
+  become: true
+  apt:
+    name:
+      - apache2
+      - php-curl
+      - php-xml
+      - libapache2-mod-php
+      - php-cli
+      - php-mbstring
+      - php-bcmath
+      - php-tokenizer
+      - php-zip
+      - certbot
+      - python3-certbot-apache
+    state: latest
+    update_cache: yes
