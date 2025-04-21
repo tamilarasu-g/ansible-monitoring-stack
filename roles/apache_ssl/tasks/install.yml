@@ -16,3 +16,7 @@
       - python3-certbot-apache
     state: latest
     update_cache: yes
+
+- name: Enable the apache modules
+  become: true
+  command: a2enmod rewrite proxy_http headers ssl proxy_wstunnel 
